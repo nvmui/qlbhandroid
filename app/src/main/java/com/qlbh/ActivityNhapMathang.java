@@ -2,6 +2,8 @@ package com.qlbh;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -77,8 +79,9 @@ public class ActivityNhapMathang extends AppCompatActivity {
                 dg = editDongia.getText().toString().trim();
                 ghichu = editGhichu.getText().toString().trim();
                 dvt = spnDVT.getSelectedItem().toString().trim();
-                new UpdateMatHang(mahang, tenhang, sl, dvt, dg, ghichu).execute(new urlconfig().url + "updateMatHang.php");
-                getMatHang();
+                String kt= String.valueOf(new UpdateMatHang(mahang, tenhang, sl, dvt, dg, ghichu).execute(new urlconfig().url + "updateMatHang.php"));
+                if(kt.equals("success")){
+                getMatHang();}else {}
             }
         });
     }
@@ -155,10 +158,29 @@ public class ActivityNhapMathang extends AppCompatActivity {
             }
             return null;
         }
-
         @Override
         protected void onPostExecute(String s) {
             Log.d("Thông báo ", s);
+            AlertDialog.Builder dialogXoa = new AlertDialog.Builder(ActivityNhapMathang.this);
+            if(s.equals("success"))
+            {
+                dialogXoa.setMessage("Thêm mới mặt hàng thành công");
+                dialogXoa.setNegativeButton("OK", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                    }
+                });
+                dialogXoa.show();
+                getMatHang();
+            }else {
+                dialogXoa.setMessage("Thêm mới mặt hàng không thành công");
+                dialogXoa.setNegativeButton("OK", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                    }
+                });
+                dialogXoa.show();
+            }
             super.onPostExecute(s);
         }
     }

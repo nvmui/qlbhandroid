@@ -1,5 +1,7 @@
 package com.qlbh;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.AsyncTask;
 import android.util.Log;
 
@@ -14,6 +16,7 @@ import okhttp3.Response;
 public class UpdateMatHang extends AsyncTask<String, Void, String> {
     String maMH, editTenMH, editSL, spinnerDVT, editDG, editGhichu;
     OkHttpClient client = new OkHttpClient().newBuilder().build();
+    ActivityNhapMathang conten;
 
     public UpdateMatHang(String maMH, String editTenMH, String editSL, String spinnerDVT, String editDG, String editGhichu) {
         this.maMH = maMH;
